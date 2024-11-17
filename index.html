@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Stats</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #282c34;
+      color: white;
+    }
+    h1 {
+      color: #ff79c6;
+    }
+    button {
+      background-color: #ff79c6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #ff5555;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 10px;
+      width: 300px;
+    }
+    .result {
+      margin-top: 20px;
+    }
+    a {
+      color: #50fa7b;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>GitHub Stats Generator</h1>
+  <p>Select an option below and enter your GitHub username to generate your stats link.</p>
+
+  <button onclick="showInput('stats')">Stats</button>
+  <button onclick="showInput('languages')">Top Language Used</button>
+
+  <div id="input-section" style="display: none;">
+    <p id="instruction"></p>
+    <input type="text" id="github-username" placeholder="Enter your GitHub username">
+    <button onclick="generateLink()">Generate Link</button>
+  </div>
+
+  <div id="result" class="result"></div>
+
+  <script>
+    let option = '';
+
+    function showInput(selectedOption) {
+      option = selectedOption;
+      const inputSection = document.getElementById('input-section');
+      const instruction = document.getElementById('instruction');
+      
+      inputSection.style.display = 'block';
+      if (selectedOption === 'stats') {
+        instruction.textContent = 'Enter your GitHub username to get your stats link:';
+      } else if (selectedOption === 'languages') {
+        instruction.textContent = 'Enter your GitHub username to get your top languages link:';
+      }
+      document.getElementById('github-username').value = ''; // Clear input field
+      document.getElementById('result').innerHTML = ''; // Clear previous result
+    }
+
+    function generateLink() {
+      const username = document.getElementById('github-username').value.trim();
+      if (!username) {
+        alert('Please enter a GitHub username.');
+        return;
+      }
+
+      let link = '';
+      if (option === 'stats') {
+        link = `https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&hide_title=true&count_private=true&theme=radical`;
+      } else if (option === 'languages') {
+        link = `https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&layout=compact&theme=radical`;
+      }
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `Your link: <a href="${link}" target="_blank">${link}</a>`;
+    }
+  </script>
+</body>
+</html>
